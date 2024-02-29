@@ -49,12 +49,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          
+          aws-region: ap-south-1 
 
       - name: Update kubeconfig
         run: aws eks --region ap-south-1 update-kubeconfig --name EKS_CLOUD
 
       - name: Deploy to kubernetes
-        run:  kubectl apply -f .github/workflows/deployment-service.yml
+        run:  kubectl apply -f deployment-service.yml
 
      

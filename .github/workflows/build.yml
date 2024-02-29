@@ -19,7 +19,26 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       - name: NPM Install
-        run: npm install # Add your specific npm install command    
+        run: npm install # Add your specific npm install command 
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Docker Scout Scan
+        run: |
+          docker-scout quickview fs://.
+          docker-scout cves fs://.
+      - name: Docker build and push
+        run: |
+          # Run commands to build and push Docker images
+          docker build -t myntra .
+          docker tag myntra sevenajay/myntra:latest
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push vishnusunkara/myntra:latest
+        env:
+          DOCKER_CLI_ACI: 1
+      - name: Docker Scout Image Scan
+        run: |
+          docker-scout quickview vishnusunkara/myntra:latest
+          docker-scout cves vishnusunkara/myntra:latest  
       # If you wish to fail your job when the Quality Gate is red, uncomment the
       # following lines. This would typically be used to fail a deployment.
       # - uses: sonarsource/sonarqube-quality-gate-action@master

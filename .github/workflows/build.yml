@@ -39,8 +39,6 @@ jobs:
       - name: Run the Container
         run: docker run -d --name myntra -p 3000:3000 vishnusunkara/myntra:latest
 
-  deploy:
-    needs: build
-    runs-on: self-hosted  # Use your self-hosted runner label here
+
     
           

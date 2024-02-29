@@ -37,7 +37,7 @@ jobs:
           DOCKER_CLI_ACI: 1
   deploy:
    needs: build-analyze-scan   
-   runs-on: [aws]
+   runs-on: ubuntu-latest
    steps:
       - name: docker pull image
         run: docker pull vishnusunkara/myntra:latest

@@ -41,6 +41,11 @@ jobs:
    steps:
       - name: docker pull image
         run: docker pull vishnusunkara/myntra:latest
+      - name: List Files
+        run: ls
+      - name: Show File Contents
+        run: cat deploy.yml
+  
 
       - name: Deploy to container
         run: docker run -d --name game -p 3000:3000 vishnusunkara/myntra:latest
